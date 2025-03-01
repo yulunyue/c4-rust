@@ -1,7 +1,8 @@
 import struct
+NNLEN = 29322 * 4
 class DecodeBase16K:
     @staticmethod
-    def encode_b16k(binary_file: str) -> (int, list):
+    def encode_b16k(binary_file: str) -> (int, list): # type: ignore
         with open(binary_file, 'rb') as file:
             buffer = file.read()
         
@@ -50,9 +51,9 @@ class DecodeBase16K:
         code = 0
         byte_value = 0
         position = 0
-        characters = NNSTR.encode('utf-16le')  # assuming NNSTR is a string
+        characters = b""  # assuming NNSTR is a string
         output = []
-        output.reserve(length)
+        output.reverse(length)
         
         while length > 0:
             length -= 1

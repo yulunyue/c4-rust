@@ -1,4 +1,6 @@
 import numpy as np
+from .game import *
+from .code_dec import DecodeBase16K
 POLICY_SIZE = 10  # You can change this value as necessary
 DIRICHLET_EPS = 0.3
 def dirichlet_noise(random_generator):
@@ -89,8 +91,8 @@ class NNManager:
         return self.cache[game_hash]
 
     def read_weights(self):
-        buffer_f16 = decode_b16k()
-        buffer_f32 = np.array([f16_to_f32(bytes) for bytes in buffer_f16.reshape(-1, 2)])
+        buffer_f16 = DecodeBase16K.decode_b16k()
+        buffer_f32 = np.array([DecodeBase16K.f16_to_f32(bytes) for bytes in buffer_f16.reshape(-1, 2)])
         id = 0
         for i in range(len(self.path)):
             next_size = POLICY_SIZE + 1 if i == len(self.path) - 1 else self.path[i + 1].input.size

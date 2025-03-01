@@ -3,7 +3,7 @@ W = 9
 H = 7
 POLICY_SIZE = W
 INPUT_SIZE = H * W * 2
-NNLEN = 29322 * 4
+
 
 WIDTH = 9
 HEIGHT = 7

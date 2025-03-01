@@ -10,7 +10,7 @@ class MCTS:
         self.pool = Pool(2000000)
         self.root = Node()
         self.nn = NNManager()
-        self.nn.nn.read_weights()
+        self.nn.read_weights()
         for _ in range(2):
             self.root.playout(self.nn, self.pool)
 
