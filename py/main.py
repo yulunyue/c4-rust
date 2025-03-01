@@ -2,7 +2,7 @@
 import os
 import threading
 from collections import defaultdict
-
+from .mcts import MCTS
 class Config:
     def __init__(self, self_play, iters, cpuct, learning_rate=None, load_file=None):
         self.self_play = self_play
