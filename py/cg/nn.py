@@ -64,7 +64,25 @@ class NN:
         res.v = np.tanh(res_raw[POLICY_SIZE])
         softmax(res.p)
         return res
-
+    
+    def read_weights(self):
+        buffer_f16 = DecodeBase16K.decode_b16k()
+        buffer_f32 = []
+        for i in range(0, len(buffer_f16), 2):
+            bytes_data = {
+                'bytes': [buffer_f16[i], buffer_f16[i + 1]]
+            }
+            buffer_f32.append(DecodeBase16K.f16_to_f32(bytes_data['bytes'][0]))
+        id = 0
+        for i in range(len(self.path)):
+            next_size = POLICY_SIZE + 1 if i == len(self.path) - 1 else self.path[i + 1].input.size
+            weights_size = self.path[i].input.size * next_size
+            self.path[i].weights = np.zeros((self.path[i].input.size, next_size), dtype=np.float32)
+            self.path[i].bias = np.zeros(next_size, dtype=np.float32)
+            self.path[i].weights.flat[:] = buffer_f32[id:id + weights_size]
+            id += weights_size
+            self.path[i].bias[:] = buffer_f32[id:id + next_size]
+            id += next_size
 def relu(v):
     np.maximum(v, 0, out=v)
 
@@ -90,16 +108,3 @@ class NNManager:
         self.access += 1
         return self.cache[game_hash]
 
-    def read_weights(self):
-        buffer_f16 = DecodeBase16K.decode_b16k()
-        buffer_f32 = np.array([DecodeBase16K.f16_to_f32(bytes) for bytes in buffer_f16.reshape(-1, 2)])
-        id = 0
-        for i in range(len(self.path)):
-            next_size = POLICY_SIZE + 1 if i == len(self.path) - 1 else self.path[i + 1].input.size
-            weights_size = self.path[i].input.size * next_size
-            self.path[i].weights = np.zeros((self.path[i].input.size, next_size), dtype=np.float32)
-            self.path[i].bias = np.zeros(next_size, dtype=np.float32)
-            self.path[i].weights.flat[:] = buffer_f32[id:id + weights_size]
-            id += weights_size
-            self.path[i].bias[:] = buffer_f32[id:id + next_size]
-            id += next_size
