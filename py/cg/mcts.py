@@ -7,7 +7,7 @@ from .game import *
 import time
 class MCTS:
     def __init__(self):
-        self.pool = Pool(2000000)
+        self.pool = Pool(20)
         self.root = Node()
         self.nn = NNManager()
         self.nn.nn.read_weights()

@@ -1,4 +1,6 @@
 from .game import *
+from .nn import NNManager
+from .sample import CONF
 class Node:
     def __init__(self):
         self.terminal = False
@@ -48,7 +50,7 @@ class Node:
                 best_index = child_index
         return best_index
 
-    def expand(self, nn_manager):
+    def expand(self, nn_manager:NNManager):
         nn_value = nn_manager.get(self.game)  # Assuming get method is defined in NNManager
         self.expanded = True
         return nn_value.v

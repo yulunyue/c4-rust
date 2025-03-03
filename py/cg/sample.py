@@ -47,9 +47,3 @@ class SampleStore:
             existing_sample.v += sample.v
         else:
             self.samples[sample.hash] = sample
-# Configuration class to hold settings
-class Config:
-    def __init__(self, self_play, iterations, cpuct):
-        self.self_play = self_play
-        self.iterations = iterations
-        self.cpuct = cpuct

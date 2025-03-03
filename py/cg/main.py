@@ -10,12 +10,6 @@ from .code_dec import DecodeBase16K
 
 
 
-# Configuration constants based on the operating system
-if os.name == "posix":  # Linux
-    CONF = Config(self_play=False, iterations=float('inf'), cpuct=3.0)
-elif os.name == "nt":  # Windows
-    CONF = Config(self_play=True, iterations=1000, cpuct=4.0)
-
 
 
 def main():

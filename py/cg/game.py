@@ -1,3 +1,12 @@
+# Configuration class to hold settings
+import sys
+class Config:
+    def __init__(self, self_play, iterations, cpuct):
+        self.self_play = self_play
+        self.iterations = iterations
+        self.cpuct = cpuct
+
+CONF = Config(self_play=True, iterations=1000, cpuct=4.0)
 DIRICHLET_EPS = 0.3
 W = 9
 H = 7
@@ -80,12 +89,14 @@ class Connect4:
 
     def on_set_indices(self, func):
         maps = [self.my_bitboard, self.opponent_bitboard]
+
         for i in range(2):
             while maps[i] != 0:
                 r = (maps[i] & -maps[i]).bit_length() - 1  # equivalent to trailing_zeros
                 maps[i] ^= 1 << r
                 nn_index = r * 2 + i
                 func(nn_index)
+
 
     def print_board(self):
         for row in range(HEIGHT - 1, -1, -1):
