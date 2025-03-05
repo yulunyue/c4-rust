@@ -6,7 +6,7 @@ from .mcts import MCTS
 import random
 from .sample import Sample,SampleStore
 from .code_dec import DecodeBase16K
-
+import sys
 
 
 
@@ -21,17 +21,16 @@ def main():
             os.remove(path)
         with open(path, 'w') as output:
             output.write(f'NNSTR = "{st}"')
+    elif sys.argv[-1]=='test':
+        handles = []
+        for _ in range(4):
+            handle = threading.Thread(target=run_mcts)
+            handle.start()
+            handles.append(handle)
+        for h in handles:
+            h.join()
     else:
-        if os.name == "nt" and 0:  # Windows
-            handles = []
-            for _ in range(4):
-                handle = threading.Thread(target=run_mcts)
-                handle.start()
-                handles.append(handle)
-            for h in handles:
-                h.join()
-        else:
-            MCTS().cg()
+        MCTS().cg()
 
 def run_mcts():
     rng = random.Random()
