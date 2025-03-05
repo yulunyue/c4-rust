@@ -1,6 +1,7 @@
 from .game import *
 from .nn import NNManager
 from .sample import CONF
+from typing import List
 class Node:
     def __init__(self):
         self.terminal = False
@@ -8,7 +9,7 @@ class Node:
         self.value = -1
         self.q = 0.0
         self.p = 0.0
-        self.children = []
+        self.children:List[Node] = []
         self.game = Connect4()  # Assuming Connect4 class is defined elsewhere
         self.expanded = False
         self.live_child = 0
@@ -23,6 +24,7 @@ class Node:
         self.game = Connect4()  # Assuming Connect4 class is defined elsewhere
         self.expanded = False
         self.live_child = 0
+        return self
 
     def ucb(self, multiplier):
         return (self.p * multiplier + self.q) / (1 + self.visits)

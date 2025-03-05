@@ -21,7 +21,7 @@ def main():
             os.remove(path)
         with open(path, 'w') as output:
             output.write(f'NNSTR = "{st}"')
-    elif sys.argv[-1]=='test':
+    elif sys.argv[-1]=='train':
         handles = []
         for _ in range(4):
             handle = threading.Thread(target=run_mcts)
@@ -29,12 +29,14 @@ def main():
             handles.append(handle)
         for h in handles:
             h.join()
+    elif sys.argv[-1]=='test':
+        run_mcts()
     else:
         MCTS().cg()
 
 def run_mcts():
     rng = random.Random()
-    sample_store = SampleStore(samples={})
+    sample_store = SampleStore()
     mcts = MCTS()  # Assuming MCTS is defined elsewhere
     for i in range(250):
         print(i)

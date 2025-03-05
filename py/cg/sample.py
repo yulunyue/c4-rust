@@ -1,25 +1,23 @@
 from .game import *
 from .node import Node
+from typing import List
 class Pool:
     def __init__(self, capacity):
-        self.nodes = []
+        self.nodes:List[Node] = []
         self.ptrs = []
         self.size = capacity
         self.grow()
 
     def grow(self):
-        self.nodes = [Node() for _ in range(self.size)]
-        for node in self.nodes:
-            self.ptrs.append(node)  # Assuming nodes are directly appended as pointers
+        pass
 
     def pop(self):
-        return self.ptrs.pop()  # Safely pop the last element
+        if not self.nodes:
+            return Node()
+        return self.nodes.pop().reinit()  # Safely pop the last element
 
     def push(self, node):
-        for child in node.children:
-            self.push(child)
-        node.reinit()
-        self.ptrs.append(node)
+        self.nodes.append(node)
 # Define a constant for POLICY_SIZE
 
 class Sample:

@@ -11,6 +11,7 @@ DIRICHLET_EPS = 0.3
 W = 9
 H = 7
 POLICY_SIZE = W
+ACTION_SIZE=POLICY_SIZE
 INPUT_SIZE = H * W * 2
 
 
@@ -105,3 +106,6 @@ class Connect4:
                 print("O" if self.my_bitboard & index else "X" if self.opponent_bitboard & index else ".", end=" ")
             print()
         print("0 1 2 3 4 5 6 7 8")
+
+class Game(Connect4):
+    pass
